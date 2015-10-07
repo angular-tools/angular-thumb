@@ -1,7 +1,6 @@
 {
-  "name": "Angular thumbnails",
-  "version": "v1.5.6",
-  "authors": [
+  "name": "angular-thumb",
+    "authors": [
     "minutephp <dev@minutephp.com>"
   ],
   "description": "Simple AngularJS plugin to create thumbnail from large images",
