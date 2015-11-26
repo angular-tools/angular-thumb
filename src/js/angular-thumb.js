@@ -20,9 +20,9 @@
                                 var video_id = parts.pop();
 
                                 if (video_id.length == 11) {
-                                    console.log("video_id: ", video_id);
+                                    //console.log("video_id: ", video_id);
                                     $scope.img = '//img.youtube.com/vi/' + video_id + '/0.jpg';
-                                    console.log('i', $scope.img);
+                                    //console.log('i', $scope.img);
                                     return;
                                 }
                             } else if (parts = value.match(/(.*)\.mp4$/)) {
