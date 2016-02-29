@@ -2,12 +2,12 @@
     'use strict';
 
     angular.module('angularThumb', [])
-        .directive('ngThumb', function () {
+        .directive('ngThumb', function ($timeout) {
             return {
                 restrict: 'A',
                 replace: true,
-                scope: {url: '=', imgClass: '@', thumbHeight: '@'},
-                template: '<div class="{{class}}" style="height: {{thumbHeight || 128}}px; background-image: url(http://i.imgur.com/vW5NOC9.jpg)">' +
+                scope: {url: '=', imgClass: '@', thumbHeight: '@', ngFail: '&'},
+                template: '<div class="{{class}}" style="height: {{thumbHeight || 128}}px; background-image: url(http://i.imgur.com/KCxGAWh.gif)">' +
                 '              <div class="{{class}}" style="height: {{thumbHeight || 128}}px; background-image: url({{img}})">&nbsp;</div>' +
                 '          </div>',
                 link: function ($scope, element, attrs) {
@@ -20,9 +20,7 @@
                                 var video_id = parts.pop();
 
                                 if (video_id.length == 11) {
-                                    //console.log("video_id: ", video_id);
                                     $scope.img = '//img.youtube.com/vi/' + video_id + '/0.jpg';
-                                    //console.log('i', $scope.img);
                                     return;
                                 }
                             } else if (parts = value.match(/(.*)\.mp4$/)) {
@@ -30,7 +28,16 @@
                             }
                         }
 
-                        $scope.img = value;
+                        if ($scope.ngFail) {
+                            var image = new Image();
+                            image.onerror = $scope.ngFail;
+                            image.onload = function () {
+                                $timeout(function () {$scope.img = value;});
+                            };
+                            image.src = value;
+                        } else {
+                            $scope.img = value;
+                        }
                     });
                 }
             }
